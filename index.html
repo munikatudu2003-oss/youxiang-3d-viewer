@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouXiang Custom Figurines — 3D &amp; AR Preview</title>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+<style>
+  html, body { margin:0; padding:0; height:100%; font-family: -apple-system, "Segoe UI", Roboto, sans-serif; background:#f2f2f4; color:#222; }
+  header { text-align:center; padding:18px 16px 6px; }
+  header h1 { font-size:20px; margin:0 0 6px; }
+  header p { margin:0; color:#666; font-size:14px; }
+  .tabs { display:flex; justify-content:center; gap:8px; margin:14px 0 4px; }
+  .tabs button { border:1px solid #c9c9cf; background:#fff; border-radius:999px; padding:8px 18px; font-size:14px; cursor:pointer; }
+  .tabs button.active { background:#b3001b; border-color:#b3001b; color:#fff; }
+  model-viewer { width:100%; height:62vh; background:#ececf0; }
+  .hint { text-align:center; color:#666; font-size:13px; padding:10px 20px 0; }
+  .ar-tip { text-align:center; font-size:14px; padding:6px 20px 24px; }
+  footer { text-align:center; color:#999; font-size:12px; padding-bottom:20px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>See It in 3D — At Real Size</h1>
+  <p>Drag to spin the figurine. Tap the AR button to place it on your table at true size.</p>
+</header>
+
+<div class="tabs">
+  <button id="tab-single" class="active" onclick="show('single')">Single Figurine</button>
+  <button id="tab-couple" onclick="show('couple')">Couple Figurine</button>
+</div>
+
+<model-viewer id="viewer"
+  src="single_web.glb"
+  ar
+  ar-modes="webxr scene-viewer quick-look"
+  ar-scale="fixed"
+  camera-controls
+  auto-rotate
+  auto-rotate-delay="1200"
+  shadow-intensity="0.7"
+  exposure="1.05"
+  alt="Sample custom figurine 3D model">
+  <button slot="ar-button" style="background:#b3001b;color:#fff;border:none;border-radius:999px;padding:12px 22px;font-size:15px;position:absolute;bottom:18px;left:50%;transform:translateX(-50%);cursor:pointer;">
+    📐 View at Real Size (AR)
+  </button>
+</model-viewer>
+
+<p class="hint">Sample model shown. Every YouXiang figurine is custom-made from your own photo — yours will look like you.</p>
+<p class="ar-tip">Tip: in AR mode, a 15&nbsp;cm figurine appears at exactly 15&nbsp;cm — hold it next to a mug or book to feel the size before you order.</p>
+<footer>YouXiang Custom Figurines · 3D preview</footer>
+
+<script>
+  var viewer = document.getElementById('viewer');
+  function show(kind) {
+    viewer.src = kind === 'couple' ? 'couple_web.glb' : 'single_web.glb';
+    document.getElementById('tab-single').classList.toggle('active', kind === 'single');
+    document.getElementById('tab-couple').classList.toggle('active', kind === 'couple');
+  }
+</script>
+</body>
+</html>
