@@ -57,6 +57,7 @@
     document.getElementById('tab-single').classList.toggle('active', kind === 'single');
     document.getElementById('tab-couple').classList.toggle('active', kind === 'couple');
   }
+  if (new URLSearchParams(location.search).get('model') === 'couple') { show('couple'); }
 </script>
 </body>
 </html>
