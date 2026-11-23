@@ -32,6 +32,7 @@
 
 <model-viewer id="viewer"
   src="single_web.glb"
+  ios-src="single.usdz"
   ar
   ar-modes="webxr scene-viewer quick-look"
   ar-scale="fixed"
@@ -54,6 +55,7 @@
   var viewer = document.getElementById('viewer');
   function show(kind) {
     viewer.src = kind === 'couple' ? 'couple_web.glb' : 'single_web.glb';
+    viewer.setAttribute('ios-src', kind === 'couple' ? 'couple.usdz' : 'single.usdz');
     document.getElementById('tab-single').classList.toggle('active', kind === 'single');
     document.getElementById('tab-couple').classList.toggle('active', kind === 'couple');
   }
