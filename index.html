@@ -10,7 +10,7 @@
   header { text-align:center; padding:18px 16px 6px; }
   header h1 { font-size:20px; margin:0 0 6px; }
   header p { margin:0; color:#666; font-size:14px; }
-  .tabs { display:flex; justify-content:center; gap:8px; margin:14px 0 4px; }
+  .tabs { display:flex; justify-content:center; gap:8px; margin:14px 0 4px; flex-wrap:wrap; }
   .tabs button { border:1px solid #c9c9cf; background:#fff; border-radius:999px; padding:8px 18px; font-size:14px; cursor:pointer; }
   .tabs button.active { background:#b3001b; border-color:#b3001b; color:#fff; }
   model-viewer { width:100%; height:62vh; background:#ececf0; }
@@ -28,6 +28,7 @@
 <div class="tabs">
   <button id="tab-single" class="active" onclick="show('single')">Single Figurine</button>
   <button id="tab-couple" onclick="show('couple')">Couple Figurine</button>
+  <button id="tab-pair" onclick="show('pair')">Seated Pair</button>
 </div>
 
 <model-viewer id="viewer"
@@ -53,13 +54,21 @@
 
 <script>
   var viewer = document.getElementById('viewer');
+  var FILES = {
+    single: ['single_web.glb', 'single.usdz'],
+    couple: ['couple_web.glb', 'couple.usdz'],
+    pair: ['pair_web.glb', 'pair.usdz']
+  };
   function show(kind) {
-    viewer.src = kind === 'couple' ? 'couple_web.glb' : 'single_web.glb';
-    viewer.setAttribute('ios-src', kind === 'couple' ? 'couple.usdz' : 'single.usdz');
-    document.getElementById('tab-single').classList.toggle('active', kind === 'single');
-    document.getElementById('tab-couple').classList.toggle('active', kind === 'couple');
+    if (!FILES[kind]) kind = 'single';
+    viewer.src = FILES[kind][0];
+    viewer.setAttribute('ios-src', FILES[kind][1]);
+    for (var k in FILES) {
+      document.getElementById('tab-' + k).classList.toggle('active', k === kind);
+    }
   }
-  if (new URLSearchParams(location.search).get('model') === 'couple') { show('couple'); }
+  var m = new URLSearchParams(location.search).get('model');
+  if (m && FILES[m]) { show(m); }
 </script>
 </body>
 </html>
